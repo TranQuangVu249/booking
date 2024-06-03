@@ -1,0 +1,40 @@
+spring:
+  security:
+    deserialization:
+      trusted-packages:
+        - java.util
+        - java.lang
+        - nlu.fit.bookinghotel
+        - nlu.fit.bookinghotel.DTO
+  application:
+    name: BookingHotel
+  datasource:
+    url: jdbc:mysql://localhost:3306/BookingHotel
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: my-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        "[spring.json.type.mapping]": booking:nlu.fit.bookinghotel.DTO.BookingDTO
+server:
+  port: 8080
+api:
+  prefix: api
+
+jwt:
+  expiration: 2592000
+  secretKey: TaqlmGv1iEDMRiFp/pHuID1+T84IABfuA0xXh4GhiUI=
+logging:
+  level:
+    org.hibernate: ERROR
